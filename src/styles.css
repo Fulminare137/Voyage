@@ -1,0 +1,840 @@
+/*
+  ============================================================
+  📄 styles.css — The Complete Stylesheet
+  ============================================================
+
+  This is where ALL the visual magic happens.
+
+  🔑 HOW CSS WORKS (Quick Crash Course)
+  ──────────────────────────────────────
+  CSS = Cascading Style Sheets
+
+  A CSS rule looks like this:
+
+    selector {
+      property: value;
+    }
+
+  - SELECTOR: What to style (e.g., .navbar targets class="navbar")
+  - PROPERTY: What aspect to change (e.g., color, font-size)
+  - VALUE: What to set it to (e.g., red, 16px)
+
+  SELECTORS CHEAT SHEET:
+  - .className    → targets elements with that class
+  - #idName       → targets the element with that id
+  - element       → targets all elements of that type (h1, p, div)
+  - .parent .child → targets .child INSIDE .parent
+
+  ============================================================
+*/
+
+
+/* ──────────────────────────────────────────────────────────────
+   🎨 CSS CUSTOM PROPERTIES (Variables)
+   ──────────────────────────────────────────────────────────────
+   These are like variables in programming.
+   Define once, use everywhere with var(--name).
+
+   If you want to change the entire color scheme,
+   you only need to change these values!
+   ────────────────────────────────────────────────────────────── */
+:root {
+  /* Colors */
+  --bg-primary: #0a0a0a;         /* Near-black background */
+  --bg-secondary: #111111;       /* Slightly lighter for cards */
+  --bg-tertiary: #1a1a1a;        /* Even lighter for hover states */
+  --text-primary: #e5e5e5;       /* Main text — soft white */
+  --text-secondary: #888888;     /* Dimmed text */
+  --text-muted: #555555;         /* Very subtle text */
+  --accent: #4fd1c5;             /* Teal accent — stands out on dark bg */
+  --accent-dim: rgba(79, 209, 197, 0.15); /* Faded accent for backgrounds */
+  --border: #222222;             /* Subtle borders */
+
+  /* Typography */
+  --font-sans: 'Inter', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Spacing */
+  --section-padding: 120px;      /* Generous space between sections */
+  --container-width: 1100px;     /* Max width of content */
+
+  /* Smooth scrolling when clicking anchor links */
+  scroll-behavior: smooth;
+}
+
+
+/* ──────────────────────────────────────────────────────────────
+   🔄 CSS RESET
+   ──────────────────────────────────────────────────────────────
+   Browsers add their own default styles (margins on <body>,
+   padding on lists, etc.). A reset removes these so we start
+   from a clean slate and have full control.
+   ────────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* box-sizing: border-box means padding and border are INCLUDED
+     in the element's width, not added on top. This makes layouts
+     much more predictable. */
+}
+
+html {
+  font-size: 16px; /* Base size. 1rem = 16px */
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.7;         /* Space between lines of text */
+  -webkit-font-smoothing: antialiased; /* Makes fonts look crisp on Mac */
+}
+
+a {
+  color: var(--text-primary);
+  text-decoration: none;    /* Remove default underline */
+  transition: color 0.3s;   /* Smooth color change on hover */
+}
+
+a:hover {
+  color: var(--accent);
+}
+
+::selection {
+  /* Style when user selects/highlights text */
+  background: var(--accent);
+  color: var(--bg-primary);
+}
+
+
+/* ──────────────────────────────────────────────────────────────
+   📦 LAYOUT UTILITIES
+   ──────────────────────────────────────────────────────────────
+   Reusable classes for consistent spacing and width.
+   ────────────────────────────────────────────────────────────── */
+.container {
+  max-width: var(--container-width);
+  margin: 0 auto;           /* Center horizontally */
+  padding: 0 24px;          /* Side padding on mobile */
+}
+
+.section {
+  padding: var(--section-padding) 0;
+  border-top: 1px solid var(--border); /* Subtle line between sections */
+}
+
+.section-label {
+  /*
+    The section heading style — monospace font, small,
+    uppercase, with the teal accent color.
+    Very editorial / developer-aesthetic.
+  */
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 48px;
+}
+
+.section-description {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-top: -32px;
+  margin-bottom: 48px;
+  max-width: 600px;
+}
+
+
+/* ──────────────────────────────────────────────────────────────
+   🧭 NAVBAR
+   ──────────────────────────────────────────────────────────────
+   Fixed at the top, semi-transparent with a blur effect.
+   This "glassmorphism" effect is trendy and looks great.
+   ────────────────────────────────────────────────────────────── */
+.navbar {
+  position: fixed;          /* Stays at top even when scrolling */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;            /* Sits above everything else */
+  display: flex;
+  justify-content: space-between;  /* Logo left, links right */
+  align-items: center;
+  padding: 20px 40px;
+  background: rgba(10, 10, 10, 0.8); /* Semi-transparent dark */
+  backdrop-filter: blur(20px);       /* Blurs content behind it */
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-brand {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: var(--text-primary);
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;               /* Space between links */
+}
+
+.nav-links a {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.5px;
+  transition: color 0.3s;
+  position: relative;
+}
+
+.nav-links a:hover {
+  color: var(--text-primary);
+}
+
+/* Hover underline effect */
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--accent);
+  transition: width 0.3s;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* Hamburger menu button (mobile only) */
+.hamburger {
+  display: none;           /* Hidden on desktop */
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.hamburger span {
+  width: 20px;
+  height: 1.5px;
+  background: var(--text-primary);
+  transition: all 0.3s;
+}
+
+.hamburger.active span:first-child {
+  transform: rotate(45deg) translate(4px, 4px);
+}
+
+.hamburger.active span:last-child {
+  transform: rotate(-45deg) translate(1px, -1px);
+}
+
+
+/* ──────────────────────────────────────────────────────────────
+   🌌 HERO SECTION
+   ──────────────────────────────────────────────────────────────
+   Full-viewport height, with a canvas animation behind the text.
+   
+   KEY CSS CONCEPT: position: relative + position: absolute
+   ─────────────────────────────────────────────────────────────
+   - The parent has "position: relative" → it becomes the reference frame
+   - Children with "position: absolute" → positioned relative to the parent
+   - This lets us layer the canvas BEHIND the text
+   ────────────────────────────────────────────────────────────── */
+.hero {
+  position: relative;       /* Reference frame for absolute children */
+  min-height: 100vh;        /* vh = viewport height. 100vh = full screen */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding-top: 80px;
+}
+
+.hero-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;              /* Behind everything */
+  pointer-events: none;     /* Clicks pass through to content below */
+}
+
+.hero-content {
+  position: relative;       /* Above the canvas (z-index auto > 0 in stacking) */
+  z-index: 1;
+  text-align: center;
+  max-width: 700px;
+  padding: 0 24px;
+}
+
+.hero-label {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  margin-bottom: 16px;
+}
+
+.hero-name {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  /*
+    clamp() explained:
+    clamp(minimum, preferred, maximum)
+    
+    The font size will be 6vw (6% of viewport width),
+    but never smaller than 2.5rem or larger than 5rem.
+    This makes text RESPONSIVE without media queries!
+  */
+  font-weight: 700;
+  letter-spacing: -2px;
+  line-height: 1.1;
+  margin-bottom: 24px;
+  background: linear-gradient(135deg, #ffffff 0%, #888888 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  /* The gradient text effect: text is "cut out" of a gradient background */
+}
+
+.hero-bio {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin-bottom: 32px;
+}
+
+.hero-links {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+.hero-links a {
+  color: var(--text-secondary);
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.3s;
+}
+
+.hero-links a:hover {
+  color: var(--accent);
+  background: var(--accent-dim);
+}
+
+.link-separator {
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+}
+
+/* Mathematical decorations — floating formulas */
+.math-decorations {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.math-formula {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  opacity: 0.3;
+  /*
+    Each formula is positioned differently.
+    We use the numbered classes below (math-1, math-2, etc.)
+    to place them at different spots.
+  */
+}
+
+.math-1 { top: 15%; left: 8%; transform: rotate(-5deg); }
+.math-2 { top: 25%; right: 10%; transform: rotate(3deg); }
+.math-3 { bottom: 30%; left: 12%; transform: rotate(2deg); }
+.math-4 { bottom: 20%; right: 8%; transform: rotate(-3deg); }
+
+/* Scroll indicator at the bottom of hero */
+.scroll-indicator {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%); /* Center horizontally */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 1;
+}
+
+.scroll-indicator span {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: var(--text-muted);
+  animation: scrollPulse 2s infinite;
+}
+
+/*
+  @keyframes — CSS Animations
+  ────────────────────────────
+  Keyframes define an animation sequence.
+  "0%" is the start, "100%" is the end.
+  CSS smoothly transitions between them.
+*/
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(1.2); }
+}
+
+
+/* ──────────────────────────────────────────────────────────────
+   👤 ABOUT SECTION
+   ──────────────────────────────────────────────────────────────
+   Two-column grid layout on desktop.
+   
+   CSS GRID CRASH COURSE:
+   grid-template-columns: 1.2fr 1fr
+   → Creates 2 columns. "fr" = fraction of available space.
+   → 1.2fr is slightly wider than 1fr.
+   ────────────────────────────────────────────────────────────── */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+
+.about-text p {
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  font-size: 0.95rem;
+}
+
+.about-text .about-large {
+  font-size: 1.2rem;
+  color: var(--text-primary);
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.details-list {
+  margin-bottom: 32px;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9rem;
+}
+
+.detail-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.detail-value {
+  color: var(--text-secondary);
+}
+
+.tech-title {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+
+.tech-grid {
+  display: flex;
+  flex-wrap: wrap;          /* Wrap to next line if too wide */
+  gap: 8px;
+}
+
+.tech-tag {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent);
+  background: var(--accent-dim);
+  padding: 6px 14px;
+  border-radius: 4px;
+  border: 1px solid rgba(79, 209, 197, 0.2);
+}
+
+
+/* ──────────────────────────────────────────────────────────────
+   🛠️ WORK / PROJECTS SECTION
+   ──────────────────────────────────────────────────────────────
+   Projects displayed as clean cards in a grid.
+   ────────────────────────────────────────────────────────────── */
+.projects-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 equal columns */
+  gap: 24px;
+}
+
+.project-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 32px;
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-card:hover {
+  border-color: var(--text-muted);
+  transform: translateY(-2px); /* Slight lift on hover */
+  background: var(--bg-tertiary);
+}
+
+.project-card.featured {
+  border-color: rgba(79, 209, 197, 0.2);
+}
+
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.project-number {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.featured-badge {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--accent);
+  background: var(--accent-dim);
+  padding: 2px 10px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.project-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.project-description {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 20px;
+  flex-grow: 1;             /* Pushes everything below to the bottom */
+}
+
+.project-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.project-tech-tag {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  padding: 3px 10px;
+  border-radius: 3px;
+}
+
+.project-links {
+  display: flex;
+  gap: 16px;
+}
+
+.project-links a {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  transition: color 0.3s;
+}
+
+.project-links a:hover {
+  color: var(--accent);
+}
+
+
+/* ──────────────────────────────────────────────────────────────
+   🌱 NOW SECTION
+   ──────────────────────────────────────────────────────────────
+   Cards showing what you're currently up to.
+   ────────────────────────────────────────────────────────────── */
+.now-updated {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 8px;
+}
+
+.now-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+.now-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 28px;
+  transition: border-color 0.3s;
+}
+
+.now-card:hover {
+  border-color: var(--text-muted);
+}
+
+.now-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.now-emoji {
+  font-size: 1.4rem;
+}
+
+.now-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.now-description {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.now-quote {
+  font-style: italic;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  border-left: 2px solid var(--accent);
+  padding-left: 20px;
+  max-width: 500px;
+}
+
+
+/* ──────────────────────────────────────────────────────────────
+   🛰️ FOOTER with Voyager 1 Tracker
+   ──────────────────────────────────────────────────────────────
+   The crown jewel — a live counter showing how far
+   Voyager 1 is from Earth, updating every second.
+   ────────────────────────────────────────────────────────────── */
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 64px 0;
+}
+
+.voyager-tracker {
+  text-align: center;
+  margin-bottom: 48px;
+  padding: 40px 0;
+}
+
+.voyager-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.voyager-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  display: inline-block;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(79, 209, 197, 0.4); }
+  50% { opacity: 0.8; box-shadow: 0 0 0 8px rgba(79, 209, 197, 0); }
+}
+
+.voyager-distance {
+  font-family: var(--font-mono);
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  letter-spacing: 2px;
+  /*
+    font-variant-numeric: tabular-nums makes all digits the same width.
+    This prevents the number from "jumping" as digits change.
+  */
+  font-variant-numeric: tabular-nums;
+}
+
+.voyager-sublabel {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.footer-links {
+  display: flex;
+  gap: 24px;
+}
+
+.footer-links a {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
+.footer-copy {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+
+/* ──────────────────────────────────────────────────────────────
+   📱 RESPONSIVE DESIGN (Mobile)
+   ──────────────────────────────────────────────────────────────
+
+   @media queries let you apply different styles based on
+   screen size. This is how we make the site look good on
+   phones AND desktops.
+
+   "max-width: 768px" means: "apply these styles when the
+   screen is 768px wide or smaller" (tablet/phone size).
+
+   THE MOBILE-FIRST APPROACH:
+   Some developers write mobile styles first, then add
+   @media (min-width) for desktop. We're doing it the other
+   way: desktop first, then overriding for mobile.
+   Both approaches are valid!
+   ────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  :root {
+    --section-padding: 80px;
+  }
+
+  /* Show hamburger, hide regular nav links on mobile */
+  .hamburger {
+    display: flex;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%;           /* Start offscreen to the right */
+    width: 100%;
+    height: 100vh;
+    background: var(--bg-primary);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+    transition: right 0.3s ease;
+    z-index: 999;
+  }
+
+  .nav-links.active {
+    right: 0;               /* Slide in from the right */
+  }
+
+  .nav-links a {
+    font-size: 1.2rem;
+  }
+
+  /* Stack grids into single columns on mobile */
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .projects-list {
+    grid-template-columns: 1fr;
+  }
+
+  .now-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-name {
+    letter-spacing: -1px;
+  }
+
+  .hero-bio br {
+    display: none;          /* Remove line breaks on mobile */
+  }
+
+  /* Hide math decorations on small screens (too cluttered) */
+  .math-decorations {
+    display: none;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+}
