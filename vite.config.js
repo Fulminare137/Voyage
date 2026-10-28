@@ -19,5 +19,6 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
+  base: '/Voyage/',
   plugins: [react()], // This plugin teaches Vite how to understand React's JSX syntax
 });
