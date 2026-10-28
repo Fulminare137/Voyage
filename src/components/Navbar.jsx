@@ -14,7 +14,7 @@ function Navbar() {
   return (
     <nav className="navbar">
       <a href="#index" className="nav-brand">
-        Fulminare
+        Voyage
       </a>
 
       <button

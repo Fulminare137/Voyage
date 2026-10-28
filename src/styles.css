@@ -861,7 +861,6 @@ a:hover {
 
 .physics-canvas {
   width: 100%;
-  height: auto;
   border-radius: 6px;
   background: var(--bg-primary);
   border: 1px solid var(--border);
@@ -1023,10 +1022,6 @@ a:hover {
 
   .physics-grid {
     grid-template-columns: 1fr;
-  }
-
-  .physics-canvas {
-    height: 220px;
   }
 
   .hero-name {

@@ -2,30 +2,25 @@
   ============================================
   📄 About.jsx — About Me Section
   ============================================
-
-  Updated with:
-  - Real bio focused on astrophysics + math appreciation
-  - 12th graduate going to study
-  - Location + interests details (no "Focus" or "Education" as dry fields)
-  - Languages section: German B2/C1, English C1 with quirky German one-liners
-  - Technologies section kept
+  - No 12th grade mention, neutral phrasing
+  - "Next" detail row removed
+  - German entries: scientific quotes only, no translations
+  - English entry unchanged
 */
 
 function About() {
-  /*
-    Quick-look details in the right column.
-    "Focus: Full Stack" removed. Education kept quirky.
-  */
   const details = [
     { label: 'Location', value: 'India' },
-    { label: 'Currently', value: 'Surviving 12th grade, barely' },
-    { label: 'Next', value: 'University — somewhere with a good telescope' },
+    { label: 'Currently', value: 'Studying. Thinking. Occasionally both.' },
     { label: 'Interests', value: 'Astrophysics, Mathematics, Languages' },
   ];
 
   /*
-    LANGUAGES — with each one's proficiency and a quirky German phrase.
-    German one-liners that perfectly capture the energy.
+    LANGUAGES
+    ──────────
+    English: keep as-is (user confirmed it's perfect).
+    German: scientific quotes in German — no translations.
+    These are real statements by real scientists, written in German.
   */
   const languages = [
     {
@@ -36,17 +31,17 @@ function About() {
     {
       lang: 'German',
       level: 'B2/C1',
-      note: '"Ich lerne Deutsch, weil Englisch zu einfach ist." (I learn German because English is too easy.)',
+      note: '"Gott würfelt nicht." — Albert Einstein',
     },
     {
       lang: '',
       level: '',
-      note: '"Warum ist die Banane krumm? Weil niemand in den Wald biegt." (Why is a banana bent? Because nobody turns into the forest.) — Classic German logic.',
+      note: '"Die Natur macht keine Sprünge." — Gottfried Wilhelm Leibniz',
     },
     {
       lang: '',
       level: '',
-      note: '"Ich spreche Deutsch wie Einstein Physik erklärt hat — meistens richtig, manchmal relativistisch." (I speak German like Einstein explained physics — mostly right, sometimes relativistic.)',
+      note: '"Wir müssen wissen. Wir werden wissen." — David Hilbert',
     },
   ];
 
@@ -64,8 +59,8 @@ function About() {
           {/* LEFT COLUMN: Text */}
           <div className="about-text">
             <p className="about-large">
-              I'm Ramakrushna — a 12th graduate who fell in love with
-              the universe and never quite recovered.
+              I'm Ramakrushna — someone who fell in love with the universe
+              and never quite recovered.
             </p>
             <p>
               Astrophysics isn't just something I study — it's how I make
