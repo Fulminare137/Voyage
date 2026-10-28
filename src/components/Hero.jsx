@@ -84,7 +84,7 @@ function Hero() {
           Staring at the universe and wondering why it bothers to be
           so unreasonably mathematical.
           <br />
-          12th graduate. Astrophysics enthusiast. Occasional poet of equations.
+          Astrophysics enthusiast. Occasional poet of equations.
         </p>
 
         <div className="hero-links">

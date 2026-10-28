@@ -1,1045 +1,638 @@
 /*
   ============================================================
-  📄 styles.css — The Complete Stylesheet
-  ============================================================
+  styles.css — Dark theme using yuvich.com's exact design tokens
+  
+  yuvich.com tokens (light):
+    --bg: #fafaf9   --ink: #121214   --text: #636268
+    --mute: #7d7c83  --rule: #e6e5e2  --accent: #6b46c1
+    --sans: Instrument Sans  --mono: Fragment Mono
 
-  This is where ALL the visual magic happens.
-
-  🔑 HOW CSS WORKS (Quick Crash Course)
-  ──────────────────────────────────────
-  CSS = Cascading Style Sheets
-
-  A CSS rule looks like this:
-
-    selector {
-      property: value;
-    }
-
-  - SELECTOR: What to style (e.g., .navbar targets class="navbar")
-  - PROPERTY: What aspect to change (e.g., color, font-size)
-  - VALUE: What to set it to (e.g., red, 16px)
-
-  SELECTORS CHEAT SHEET:
-  - .className    → targets elements with that class
-  - #idName       → targets the element with that id
-  - element       → targets all elements of that type (h1, p, div)
-  - .parent .child → targets .child INSIDE .parent
-
+  We keep the same tokens but flip bg→dark and invert text.
+  Window/card dark color from yuvich: #19181d
   ============================================================
 */
 
-
-/* ──────────────────────────────────────────────────────────────
-   🎨 CSS CUSTOM PROPERTIES (Variables)
-   ──────────────────────────────────────────────────────────────
-   These are like variables in programming.
-   Define once, use everywhere with var(--name).
-
-   If you want to change the entire color scheme,
-   you only need to change these values!
-   ────────────────────────────────────────────────────────────── */
+/* ── Variables ── */
 :root {
-  /* Colors */
-  --bg-primary: #0a0a0a;         /* Near-black background */
-  --bg-secondary: #111111;       /* Slightly lighter for cards */
-  --bg-tertiary: #1a1a1a;        /* Even lighter for hover states */
-  --text-primary: #e5e5e5;       /* Main text — soft white */
-  --text-secondary: #888888;     /* Dimmed text */
-  --text-muted: #555555;         /* Very subtle text */
-  --accent: #4fd1c5;             /* Teal accent — stands out on dark bg */
-  --accent-dim: rgba(79, 209, 197, 0.15); /* Faded accent for backgrounds */
-  --border: #222222;             /* Subtle borders */
+  /* Dark palette — yuvich card colour (#19181d) as page bg */
+  --bg:          #19181d;
+  --bg-card:     #1f1e23;
+  --bg-hover:    #252429;
+  --ink:         #f0eff4;
+  --text:        #c4c3c8;
+  --mute:        #7d7c83;
+  --rule:        #2e2d33;
+  --accent:      #9f7aea;        /* violet — lightened for dark bg */
+  --accent-dim:  rgba(159,122,234,0.12);
 
-  /* Typography */
-  --font-sans: 'Inter', -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  /* Exact fonts from yuvich.com */
+  --sans:        'Instrument Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --mono:        'Fragment Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 
-  /* Spacing */
-  --section-padding: 120px;      /* Generous space between sections */
-  --container-width: 1100px;     /* Max width of content */
+  --body:        15px;
+  --small:       13px;
+  --col:         680px;
+  --section-gap: 88px;
 
-  /* Smooth scrolling when clicking anchor links */
   scroll-behavior: smooth;
 }
 
-
-/* ──────────────────────────────────────────────────────────────
-   🔄 CSS RESET
-   ──────────────────────────────────────────────────────────────
-   Browsers add their own default styles (margins on <body>,
-   padding on lists, etc.). A reset removes these so we start
-   from a clean slate and have full control.
-   ────────────────────────────────────────────────────────────── */
-*,
-*::before,
-*::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  /* box-sizing: border-box means padding and border are INCLUDED
-     in the element's width, not added on top. This makes layouts
-     much more predictable. */
-}
-
-html {
-  font-size: 16px; /* Base size. 1rem = 16px */
-}
+/* ── Reset ── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { font-size:16px; }
 
 body {
-  font-family: var(--font-sans);
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  line-height: 1.7;         /* Space between lines of text */
-  -webkit-font-smoothing: antialiased; /* Makes fonts look crisp on Mac */
+  font-family: var(--sans);
+  font-size: var(--body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
 }
 
-a {
-  color: var(--text-primary);
-  text-decoration: none;    /* Remove default underline */
-  transition: color 0.3s;   /* Smooth color change on hover */
-}
+a { color: inherit; text-decoration: none; }
+a:hover { color: var(--ink); }
 
-a:hover {
-  color: var(--accent);
-}
+::selection { background: var(--accent); color: #fff; }
 
-::selection {
-  /* Style when user selects/highlights text */
-  background: var(--accent);
-  color: var(--bg-primary);
-}
-
-
-/* ──────────────────────────────────────────────────────────────
-   📦 LAYOUT UTILITIES
-   ──────────────────────────────────────────────────────────────
-   Reusable classes for consistent spacing and width.
-   ────────────────────────────────────────────────────────────── */
+/* ── Container — narrow like yuvich ── */
 .container {
-  max-width: var(--container-width);
-  margin: 0 auto;           /* Center horizontally */
-  padding: 0 24px;          /* Side padding on mobile */
+  max-width: var(--col);
+  margin: 0 auto;
+  padding: 0 24px;
 }
 
+/* ── Section ── */
 .section {
-  padding: var(--section-padding) 0;
-  border-top: 1px solid var(--border); /* Subtle line between sections */
+  padding: var(--section-gap) 0;
+  border-top: 1px solid var(--rule);
 }
 
 .section-label {
-  /*
-    The section heading style — monospace font, small,
-    uppercase, with the teal accent color.
-    Very editorial / developer-aesthetic.
-  */
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--mute);
   text-transform: uppercase;
-  letter-spacing: 3px;
-  margin-bottom: 48px;
+  letter-spacing: 0.14em;
+  margin-bottom: 36px;
 }
 
 .section-description {
-  font-size: 1rem;
-  color: var(--text-secondary);
-  margin-top: -32px;
-  margin-bottom: 48px;
-  max-width: 600px;
+  font-size: var(--body);
+  color: var(--mute);
+  margin-top: -24px;
+  margin-bottom: 36px;
 }
 
 
-/* ──────────────────────────────────────────────────────────────
-   🧭 NAVBAR
-   ──────────────────────────────────────────────────────────────
-   Fixed at the top, semi-transparent with a blur effect.
-   This "glassmorphism" effect is trendy and looks great.
-   ────────────────────────────────────────────────────────────── */
+/* ════════════════════════════════
+   NAVBAR  — yuvich style: plain text, no bg box
+   ════════════════════════════════ */
 .navbar {
-  position: fixed;          /* Stays at top even when scrolling */
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;            /* Sits above everything else */
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
   display: flex;
-  justify-content: space-between;  /* Logo left, links right */
+  justify-content: space-between;
   align-items: center;
-  padding: 20px 40px;
-  background: rgba(10, 10, 10, 0.8); /* Semi-transparent dark */
-  backdrop-filter: blur(20px);       /* Blurs content behind it */
+  padding: 16px 32px;
+  background: rgba(25, 24, 29, 0.85);
+  backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--rule);
 }
 
 .nav-brand {
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  font-weight: 500;
-  letter-spacing: 1px;
-  color: var(--text-primary);
+  font-family: var(--mono);
+  font-size: var(--small);
+  color: var(--mute);
 }
 
-.nav-links {
-  display: flex;
-  gap: 32px;               /* Space between links */
-}
+.nav-links { display: flex; gap: 24px; }
 
 .nav-links a {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-  letter-spacing: 0.5px;
-  transition: color 0.3s;
+  font-family: var(--mono);
+  font-size: var(--small);
+  color: var(--mute);
   position: relative;
+  transition: color 0.2s;
 }
+.nav-links a:hover { color: var(--ink); }
 
-.nav-links a:hover {
-  color: var(--text-primary);
-}
-
-/* Hover underline effect */
+/* Squiggle underline — borrowed from yuvich */
 .nav-links a::after {
   content: '';
   position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 1px;
+  bottom: -3px; left: 0;
+  width: 0; height: 1px;
   background: var(--accent);
-  transition: width 0.3s;
+  transition: width 0.2s;
 }
+.nav-links a:hover::after { width: 100%; }
 
-.nav-links a:hover::after {
-  width: 100%;
-}
-
-/* Hamburger menu button (mobile only) */
 .hamburger {
-  display: none;           /* Hidden on desktop */
+  display: none;
   flex-direction: column;
   gap: 5px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px;
+  background: none; border: none; cursor: pointer; padding: 4px;
 }
-
 .hamburger span {
-  width: 20px;
-  height: 1.5px;
-  background: var(--text-primary);
-  transition: all 0.3s;
+  width: 18px; height: 1px;
+  background: var(--mute);
+  display: block;
+  transition: all 0.25s;
 }
-
-.hamburger.active span:first-child {
-  transform: rotate(45deg) translate(4px, 4px);
-}
-
-.hamburger.active span:last-child {
-  transform: rotate(-45deg) translate(1px, -1px);
-}
+.hamburger.active span:first-child { transform: rotate(45deg) translate(4px, 4.5px); }
+.hamburger.active span:last-child  { transform: rotate(-45deg) translate(1px, -1px); }
 
 
-/* ──────────────────────────────────────────────────────────────
-   🌌 HERO SECTION
-   ──────────────────────────────────────────────────────────────
-   Full-viewport height, with a canvas animation behind the text.
-   
-   KEY CSS CONCEPT: position: relative + position: absolute
-   ─────────────────────────────────────────────────────────────
-   - The parent has "position: relative" → it becomes the reference frame
-   - Children with "position: absolute" → positioned relative to the parent
-   - This lets us layer the canvas BEHIND the text
-   ────────────────────────────────────────────────────────────── */
+/* ════════════════════════════════
+   HERO
+   ════════════════════════════════ */
 .hero {
-  position: relative;       /* Reference frame for absolute children */
-  min-height: 100vh;        /* vh = viewport height. 100vh = full screen */
+  position: relative;
+  min-height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: center;
   overflow: hidden;
   padding-top: 80px;
 }
 
 .hero-canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;              /* Behind everything */
-  pointer-events: none;     /* Clicks pass through to content below */
+  position: absolute; top:0; left:0;
+  width:100%; height:100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.6;
 }
 
 .hero-content {
-  position: relative;       /* Above the canvas (z-index auto > 0 in stacking) */
+  position: relative;
   z-index: 1;
-  text-align: center;
-  max-width: 700px;
+  max-width: var(--col);
+  margin: 0 auto;
   padding: 0 24px;
 }
 
-.hero-label {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--accent);
-  text-transform: uppercase;
-  letter-spacing: 4px;
-  margin-bottom: 16px;
-}
-
+/* yuvich-style: big name, then plain prose */
 .hero-name {
-  font-size: clamp(2.5rem, 6vw, 5rem);
-  /*
-    clamp() explained:
-    clamp(minimum, preferred, maximum)
-    
-    The font size will be 6vw (6% of viewport width),
-    but never smaller than 2.5rem or larger than 5rem.
-    This makes text RESPONSIVE without media queries!
-  */
+  font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: 700;
-  letter-spacing: -2px;
+  color: var(--ink);
+  letter-spacing: -0.03em;
   line-height: 1.1;
-  margin-bottom: 24px;
-  background: linear-gradient(135deg, #ffffff 0%, #888888 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  /* The gradient text effect: text is "cut out" of a gradient background */
+  margin-bottom: 20px;
 }
 
 .hero-bio {
   font-size: 1rem;
-  color: var(--text-secondary);
+  color: var(--text);
   line-height: 1.8;
-  margin-bottom: 32px;
+  margin-bottom: 28px;
+  max-width: 480px;
 }
 
 .hero-links {
   display: flex;
-  justify-content: center;
-  gap: 8px;
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-}
-
-.hero-links a {
-  color: var(--text-secondary);
-  padding: 4px 8px;
-  border-radius: 4px;
-  transition: all 0.3s;
-}
-
-.hero-links a:hover {
-  color: var(--accent);
-  background: var(--accent-dim);
-}
-
-.link-separator {
-  color: var(--text-muted);
-  display: flex;
   align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: var(--small);
 }
+.hero-links a { color: var(--mute); transition: color 0.2s; }
+.hero-links a:hover { color: var(--accent); }
+.link-separator { color: var(--rule); }
 
-/* Mathematical decorations — floating formulas */
-.math-decorations {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-}
-
+/* Scattered physics formulas */
+.math-decorations { position:absolute; inset:0; pointer-events:none; z-index:0; }
 .math-formula {
   position: absolute;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--text-muted);
-  opacity: 0.3;
-  /*
-    Each formula is positioned differently.
-    We use the numbered classes below (math-1, math-2, etc.)
-    to place them at different spots.
-  */
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--mute);
+  opacity: 0.2;
 }
+.math-1 { top:18%; left:6%;  transform:rotate(-4deg); }
+.math-2 { top:28%; right:8%; transform:rotate(2deg); }
+.math-3 { bottom:28%; left:10%; transform:rotate(3deg); }
+.math-4 { bottom:22%; right:7%; transform:rotate(-2deg); }
 
-.math-1 { top: 15%; left: 8%; transform: rotate(-5deg); }
-.math-2 { top: 25%; right: 10%; transform: rotate(3deg); }
-.math-3 { bottom: 30%; left: 12%; transform: rotate(2deg); }
-.math-4 { bottom: 20%; right: 8%; transform: rotate(-3deg); }
-
-/* Scroll indicator at the bottom of hero */
 .scroll-indicator {
-  position: absolute;
-  bottom: 32px;
-  left: 50%;
-  transform: translateX(-50%); /* Center horizontally */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  z-index: 1;
+  position: absolute; bottom:32px; left:50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column;
+  align-items: center; gap: 8px; z-index:1;
 }
-
 .scroll-indicator span {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 3px;
+  font-family: var(--mono); font-size: 10px;
+  color: var(--mute); text-transform: uppercase; letter-spacing:0.15em;
 }
-
 .scroll-line {
-  width: 1px;
-  height: 40px;
-  background: var(--text-muted);
-  animation: scrollPulse 2s infinite;
+  width:1px; height:32px;
+  background: var(--rule);
+  animation: sPulse 2.2s infinite;
 }
-
-/*
-  @keyframes — CSS Animations
-  ────────────────────────────
-  Keyframes define an animation sequence.
-  "0%" is the start, "100%" is the end.
-  CSS smoothly transitions between them.
-*/
-@keyframes scrollPulse {
-  0%, 100% { opacity: 0.3; transform: scaleY(1); }
-  50% { opacity: 1; transform: scaleY(1.2); }
+@keyframes sPulse {
+  0%,100% { opacity:0.25; transform:scaleY(1); }
+  50%      { opacity:0.7;  transform:scaleY(1.1); }
 }
 
 
-/* ──────────────────────────────────────────────────────────────
-   👤 ABOUT SECTION
-   ──────────────────────────────────────────────────────────────
-   Two-column grid layout on desktop.
-   
-   CSS GRID CRASH COURSE:
-   grid-template-columns: 1.2fr 1fr
-   → Creates 2 columns. "fr" = fraction of available space.
-   → 1.2fr is slightly wider than 1fr.
-   ────────────────────────────────────────────────────────────── */
+/* ════════════════════════════════
+   ABOUT  — prose-first, details on right
+   ════════════════════════════════ */
 .about-grid {
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 64px;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 48px;
   align-items: start;
 }
 
 .about-text p {
-  color: var(--text-secondary);
-  margin-bottom: 20px;
-  font-size: 0.95rem;
+  color: var(--text);
+  margin-bottom: 16px;
+  font-size: var(--body);
 }
 
-.about-text .about-large {
-  font-size: 1.2rem;
-  color: var(--text-primary);
+.about-large {
+  font-size: 1.1rem !important;
+  color: var(--ink) !important;
+  font-weight: 500;
   line-height: 1.6;
-  margin-bottom: 28px;
+  margin-bottom: 24px !important;
 }
 
-.details-list {
-  margin-bottom: 32px;
-}
+/* Right column */
+.details-list { margin-bottom: 32px; }
 
 .detail-row {
   display: flex;
   justify-content: space-between;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--border);
-  font-size: 0.9rem;
+  align-items: baseline;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--rule);
 }
 
 .detail-label {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--text-muted);
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--mute);
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.12em;
+  flex-shrink: 0;
 }
 
 .detail-value {
-  color: var(--text-secondary);
+  font-size: var(--small);
+  color: var(--text);
+  text-align: right;
 }
 
+.tech-section { margin-bottom: 28px; }
+
 .tech-title {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--text-muted);
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--mute);
   text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 16px;
+  letter-spacing: 0.12em;
+  margin-bottom: 12px;
 }
 
 .tech-grid {
   display: flex;
-  flex-wrap: wrap;          /* Wrap to next line if too wide */
-  gap: 8px;
+  flex-wrap: wrap;
+  gap: 6px 12px;
 }
 
 .tech-tag {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--accent);
-  background: var(--accent-dim);
-  padding: 6px 14px;
-  border-radius: 4px;
-  border: 1px solid rgba(79, 209, 197, 0.2);
+  font-family: var(--mono);
+  font-size: var(--small);
+  color: var(--mute);
+}
+.tech-tag::before { content:'— '; color:var(--rule); }
+
+/* Languages */
+.languages-list {
+  display: flex; flex-direction: column;
+  gap: 16px; margin-bottom: 28px;
 }
 
+.language-entry {
+  padding-left: 12px;
+  border-left: 1px solid var(--rule);
+  transition: border-color 0.2s;
+}
+.language-entry:hover { border-left-color: var(--accent); }
 
-/* ──────────────────────────────────────────────────────────────
-   🛠️ WORK / PROJECTS SECTION
-   ──────────────────────────────────────────────────────────────
-   Projects displayed as clean cards in a grid.
-   ────────────────────────────────────────────────────────────── */
-.projects-list {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 equal columns */
-  gap: 24px;
+.language-header {
+  display: flex; align-items: center;
+  gap: 8px; margin-bottom: 3px;
 }
 
-.project-card {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 32px;
-  transition: all 0.3s;
-  display: flex;
-  flex-direction: column;
-}
-
-.project-card:hover {
-  border-color: var(--text-muted);
-  transform: translateY(-2px); /* Slight lift on hover */
-  background: var(--bg-tertiary);
-}
-
-.project-card.featured {
-  border-color: rgba(79, 209, 197, 0.2);
-}
-
-.project-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-}
-
-.project-number {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--text-muted);
-}
-
-.featured-badge {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  color: var(--accent);
-  background: var(--accent-dim);
-  padding: 2px 10px;
-  border-radius: 3px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.project-title {
-  font-size: 1.2rem;
+.language-name {
+  font-size: var(--small);
   font-weight: 600;
-  margin-bottom: 12px;
-  color: var(--text-primary);
+  color: var(--ink);
 }
 
-.project-description {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  line-height: 1.7;
-  margin-bottom: 20px;
-  flex-grow: 1;             /* Pushes everything below to the bottom */
-}
-
-.project-tech {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 20px;
-}
-
-.project-tech-tag {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  color: var(--text-muted);
-  border: 1px solid var(--border);
-  padding: 3px 10px;
+.language-level {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--mute);
+  background: var(--accent-dim);
   border-radius: 3px;
+  padding: 1px 6px;
 }
 
-.project-links {
-  display: flex;
-  gap: 16px;
-}
-
-.project-links a {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-  transition: color 0.3s;
-}
-
-.project-links a:hover {
-  color: var(--accent);
+.language-note {
+  font-size: var(--small);
+  color: var(--mute);
+  font-style: italic;
+  line-height: 1.55;
 }
 
 
-/* ──────────────────────────────────────────────────────────────
-   🌱 NOW SECTION
-   ──────────────────────────────────────────────────────────────
-   Cards showing what you're currently up to.
-   ────────────────────────────────────────────────────────────── */
-.now-updated {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--text-muted);
-  margin-top: 8px;
-}
-
-.now-grid {
+/* ════════════════════════════════
+   PHYSICS SECTION
+   Dark window cards — exactly like yuvich's interactive cards
+   ════════════════════════════════ */
+.physics-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 24px;
   margin-bottom: 48px;
 }
 
-.now-card {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 28px;
-  transition: border-color 0.3s;
+.physics-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  overflow: hidden;
 }
 
-.now-card:hover {
-  border-color: var(--text-muted);
+.physics-card-header {
+  display: flex; align-items: center; gap: 10px;
+}
+
+.physics-number {
+  font-family: var(--mono);
+  font-size: 10px; color: var(--mute);
+}
+
+.physics-title {
+  font-size: var(--body);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.physics-description {
+  font-size: var(--small);
+  color: var(--text);
+  line-height: 1.7;
+}
+.physics-description strong { color: var(--ink); }
+
+/* The canvas: dark card exactly like yuvich's .window */
+.physics-canvas {
+  width: 100%;
+  max-width: 100%;
+  display: block;
+  border-radius: 10px;
+  /* yuvich's exact card shadow: */
+  box-shadow: 0 1px 1px #1010140f,
+              0 10px 18px -6px #10101429,
+              0 28px 44px -16px #1010144d,
+              inset 0 0 0 1px rgba(255,255,255,0.06);
+  background: #19181d;
+}
+
+.physics-caption {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--mute);
+  letter-spacing: 0.06em;
+  text-align: center;
+}
+
+/* Wave slider controls */
+.wave-controls { display:flex; flex-direction:column; gap:9px; }
+
+.wave-control-row {
+  display:flex; align-items:center; gap:12px; cursor:pointer;
+}
+
+.wave-control-label {
+  font-family: var(--mono);
+  font-size: 10px; color: var(--mute); min-width: 68px;
+}
+
+.wave-slider {
+  flex:1; min-width:0;
+  -webkit-appearance:none; appearance:none;
+  height: 1px; background: var(--rule);
+  border-radius:1px; outline:none; cursor:pointer;
+}
+.wave-slider::-webkit-slider-thumb {
+  -webkit-appearance:none;
+  width:10px; height:10px; border-radius:50%;
+  background: var(--accent); cursor:pointer;
+  transition: box-shadow 0.15s;
+}
+.wave-slider::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 0 4px var(--accent-dim);
+}
+.wave-slider::-moz-range-thumb {
+  width:10px; height:10px; border-radius:50%;
+  background: var(--accent); border:none;
+}
+
+/* Feynman quote */
+.feynman-quote {
+  border-left: 1px solid var(--rule);
+  padding-left: 20px;
+  max-width: 560px;
+  transition: border-color 0.2s;
+}
+.feynman-quote:hover { border-left-color: var(--accent); }
+.feynman-quote p {
+  font-size: 1rem;
+  color: var(--text);
+  font-style: italic;
+  line-height: 1.75;
+  margin-bottom: 8px;
+}
+.feynman-quote cite {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--mute);
+  font-style: normal;
+}
+
+
+/* ════════════════════════════════
+   NOW
+   ════════════════════════════════ */
+.now-updated {
+  display:block;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--mute);
+  margin-top: 6px;
+}
+
+.now-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+}
+
+.now-card {
+  padding: 22px 0;
+  border-top: 1px solid var(--rule);
+}
+.now-card:nth-child(odd)  { padding-right: 28px; }
+.now-card:nth-child(even) {
+  padding-left: 28px;
+  border-left: 1px solid var(--rule);
 }
 
 .now-card-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 12px;
+  display:flex; align-items:center; gap:9px; margin-bottom:8px;
 }
 
-.now-emoji {
-  font-size: 1.4rem;
-}
+.now-emoji { font-size:1rem; }
 
 .now-title {
-  font-size: 0.95rem;
+  font-family: var(--mono);
+  font-size: 10px;
   font-weight: 600;
+  color: var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
 .now-description {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-}
-
-.now-quote {
-  font-style: italic;
-  color: var(--text-muted);
-  font-size: 0.95rem;
-  border-left: 2px solid var(--accent);
-  padding-left: 20px;
-  max-width: 500px;
+  font-size: var(--small);
+  color: var(--text);
+  line-height: 1.65;
 }
 
 
-/* ──────────────────────────────────────────────────────────────
-   🛰️ FOOTER with Voyager 1 Tracker
-   ──────────────────────────────────────────────────────────────
-   The crown jewel — a live counter showing how far
-   Voyager 1 is from Earth, updating every second.
-   ────────────────────────────────────────────────────────────── */
+/* ════════════════════════════════
+   FOOTER — Voyager tracker
+   ════════════════════════════════ */
 .footer {
-  border-top: 1px solid var(--border);
-  padding: 64px 0;
+  border-top: 1px solid var(--rule);
+  padding: 48px 0;
 }
 
 .voyager-tracker {
   text-align: center;
-  margin-bottom: 48px;
-  padding: 40px 0;
+  margin-bottom: 36px;
+  padding: 28px 0;
 }
 
 .voyager-label {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--text-muted);
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--mute);
   text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+  letter-spacing: 0.14em;
+  margin-bottom: 10px;
+  display: flex; align-items: center;
+  justify-content: center; gap: 8px;
 }
 
 .voyager-dot {
-  width: 6px;
-  height: 6px;
+  width: 5px; height: 5px;
   background: var(--accent);
   border-radius: 50%;
   display: inline-block;
-  animation: pulse 2s infinite;
+  animation: vDot 2.5s infinite;
 }
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(79, 209, 197, 0.4); }
-  50% { opacity: 0.8; box-shadow: 0 0 0 8px rgba(79, 209, 197, 0); }
+@keyframes vDot {
+  0%,100% { opacity:1; }
+  50%      { opacity:0.3; }
 }
 
 .voyager-distance {
-  font-family: var(--font-mono);
-  font-size: clamp(1.5rem, 4vw, 2.5rem);
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: 8px;
-  letter-spacing: 2px;
-  /*
-    font-variant-numeric: tabular-nums makes all digits the same width.
-    This prevents the number from "jumping" as digits change.
-  */
+  font-family: var(--mono);
+  font-size: clamp(1.1rem, 3vw, 1.8rem);
+  color: var(--ink);
+  margin-bottom: 6px;
+  letter-spacing: 0.04em;
   font-variant-numeric: tabular-nums;
 }
 
 .voyager-sublabel {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--text-muted);
-  letter-spacing: 1px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--mute);
+  letter-spacing: 0.08em;
 }
 
 .footer-bottom {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 24px;
-  border-top: 1px solid var(--border);
+  padding-top: 20px;
+  border-top: 1px solid var(--rule);
 }
 
-.footer-links {
-  display: flex;
-  gap: 24px;
-}
+.footer-links { display:flex; gap:18px; }
 
 .footer-links a {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--text-muted);
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--mute);
+  transition: color 0.2s;
 }
-
-.footer-links a:hover {
-  color: var(--accent);
-}
+.footer-links a:hover { color: var(--accent); }
 
 .footer-copy {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--text-muted);
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--mute);
 }
 
 
-/* ──────────────────────────────────────────────────────────────
-   🌐 LANGUAGES SECTION
-   ────────────────────────────────────────────────────────────── */
-.languages-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-bottom: 32px;
-}
+/* ════════════════════════════════
+   MOBILE
+   ════════════════════════════════ */
+@media (max-width: 640px) {
+  :root { --section-gap: 60px; }
 
-.language-entry {
-  border-left: 2px solid var(--border);
-  padding-left: 14px;
-  transition: border-color 0.3s;
-}
-
-.language-entry:hover {
-  border-left-color: var(--accent);
-}
-
-.language-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 4px;
-}
-
-.language-name {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.language-level {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  color: var(--accent);
-  background: var(--accent-dim);
-  padding: 2px 8px;
-  border-radius: 3px;
-  border: 1px solid rgba(79, 209, 197, 0.2);
-}
-
-.language-note {
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-  font-style: italic;
-}
-
-
-/* ──────────────────────────────────────────────────────────────
-   ⚛️ PHYSICS / INTERACTIVE SECTION
-   ────────────────────────────────────────────────────────────── */
-.physics-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 32px;
-  margin-bottom: 56px;
-}
-
-.physics-card {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 28px;
-  transition: border-color 0.3s;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.physics-card:hover {
-  border-color: rgba(79, 209, 197, 0.25);
-}
-
-.physics-card-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.physics-number {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--text-muted);
-}
-
-.physics-title {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.physics-description {
-  font-size: 0.82rem;
-  color: var(--text-secondary);
-  line-height: 1.7;
-}
-
-.physics-description strong {
-  color: var(--text-primary);
-}
-
-.physics-canvas {
-  width: 100%;
-  border-radius: 6px;
-  background: var(--bg-primary);
-  border: 1px solid var(--border);
-  display: block;
-  cursor: default;
-}
-
-.physics-caption {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  color: var(--text-muted);
-  letter-spacing: 0.5px;
-  text-align: center;
-}
-
-/* Wave controls / sliders */
-.wave-controls {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.wave-control-row {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  cursor: pointer;
-}
-
-.wave-control-label {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  color: var(--text-secondary);
-  min-width: 80px;
-}
-
-.wave-slider {
-  flex: 1;
-  -webkit-appearance: none;
-  appearance: none;
-  height: 2px;
-  background: var(--border);
-  border-radius: 2px;
-  outline: none;
-  cursor: pointer;
-}
-
-.wave-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--accent);
-  cursor: pointer;
-  transition: box-shadow 0.2s;
-}
-
-.wave-slider::-webkit-slider-thumb:hover {
-  box-shadow: 0 0 0 4px var(--accent-dim);
-}
-
-.wave-slider::-moz-range-thumb {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--accent);
-  cursor: pointer;
-  border: none;
-}
-
-/* Feynman quote — with a bit more personality than the old blockquote */
-.feynman-quote {
-  border-left: 2px solid var(--accent);
-  padding-left: 24px;
-  max-width: 640px;
-}
-
-.feynman-quote p {
-  font-size: 1.05rem;
-  color: var(--text-secondary);
-  font-style: italic;
-  line-height: 1.7;
-  margin-bottom: 10px;
-}
-
-.feynman-quote cite {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--accent);
-  font-style: normal;
-  letter-spacing: 0.5px;
-}
-
-
-/* ──────────────────────────────────────────────────────────────
-   📱 RESPONSIVE DESIGN (Mobile)
-   ──────────────────────────────────────────────────────────────
-
-   @media queries let you apply different styles based on
-   screen size. This is how we make the site look good on
-   phones AND desktops.
-
-   "max-width: 768px" means: "apply these styles when the
-   screen is 768px wide or smaller" (tablet/phone size).
-
-   THE MOBILE-FIRST APPROACH:
-   Some developers write mobile styles first, then add
-   @media (min-width) for desktop. We're doing it the other
-   way: desktop first, then overriding for mobile.
-   Both approaches are valid!
-   ────────────────────────────────────────────────────────────── */
-@media (max-width: 768px) {
-  :root {
-    --section-padding: 80px;
-  }
-
-  /* Show hamburger, hide regular nav links on mobile */
-  .hamburger {
-    display: flex;
-  }
+  .navbar { padding: 14px 20px; }
+  .hamburger { display: flex; }
 
   .nav-links {
-    position: fixed;
-    top: 0;
-    right: -100%;           /* Start offscreen to the right */
-    width: 100%;
-    height: 100vh;
-    background: var(--bg-primary);
+    position: fixed; top:0; right:-100%;
+    width:100%; height:100vh;
+    background: var(--bg);
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 32px;
-    transition: right 0.3s ease;
-    z-index: 999;
+    justify-content: center; align-items: center;
+    gap: 28px;
+    transition: right 0.3s ease; z-index:99;
   }
+  .nav-links.active { right:0; }
+  .nav-links a { font-size: 1rem; }
 
-  .nav-links.active {
-    right: 0;               /* Slide in from the right */
-  }
+  .hero-bio br { display:none; }
+  .math-decorations { display:none; }
 
-  .nav-links a {
-    font-size: 1.2rem;
-  }
+  .about-grid { grid-template-columns:1fr; gap:36px; }
 
-  /* Stack grids into single columns on mobile */
-  .about-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
+  /* Stack physics cards + prevent overflow */
+  .physics-grid { grid-template-columns:1fr; gap:40px; }
+  .physics-card { overflow:hidden; min-width:0; }
+  .physics-canvas { max-width:100%; }
 
-  .projects-list {
-    grid-template-columns: 1fr;
-  }
+  .now-grid { grid-template-columns:1fr; }
+  .now-card:nth-child(odd),
+  .now-card:nth-child(even) { padding:18px 0; border-left:none; }
 
-  .now-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .physics-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .hero-name {
-    letter-spacing: -1px;
-  }
-
-  .hero-bio br {
-    display: none;          /* Remove line breaks on mobile */
-  }
-
-  /* Hide math decorations on small screens (too cluttered) */
-  .math-decorations {
-    display: none;
-  }
-
-  .footer-bottom {
-    flex-direction: column;
-    gap: 16px;
-    text-align: center;
-  }
+  .footer-bottom { flex-direction:column; gap:12px; text-align:center; }
 }

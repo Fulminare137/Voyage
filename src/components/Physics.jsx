@@ -59,7 +59,8 @@ function DoublePendulum() {
 
     const setupCanvas = () => {
       const rect = canvas.parentElement.getBoundingClientRect();
-      const W = rect.width;
+      // Clamp to the actual rendered parent width — prevents mobile overflow
+      const W = Math.floor(rect.width);
       const H = 340; // logical CSS height
 
       // Physical pixel resolution
@@ -281,7 +282,8 @@ function WaveSuperposition() {
 
     const setupCanvas = () => {
       const rect = canvas.parentElement.getBoundingClientRect();
-      const W = rect.width;
+      // Clamp to actual rendered parent — prevents mobile overflow
+      const W = Math.floor(rect.width);
       const H = 200;
       canvas.width  = W * dpr;
       canvas.height = H * dpr;
