@@ -3,55 +3,37 @@
   📄 Now.jsx — The "Now" Page Section
   ============================================
 
-  Inspired by the "Now" page on yuvich.com — a snapshot of
-  what you're currently doing, learning, or building.
-
-  This is different from a resume (which is about the past).
-  A "Now" section answers: "What are you focused on RIGHT NOW?"
-
-  🔑 KEY CONCEPT: CONDITIONAL RENDERING
-  ──────────────────────────────────────
-  In React, you can show/hide elements based on conditions:
-
-  Method 1: Ternary operator
-    {isLoggedIn ? <Dashboard /> : <LoginForm />}
-
-  Method 2: Logical AND (&&)
-    {hasNotification && <Badge />}
-    (If hasNotification is true, show Badge. Otherwise, show nothing.)
-
-  We use && below for the emoji bullet points.
+  Updated to reflect:
+  - Astrophysics focus
+  - 12th grade life
+  - Feynman quote REMOVED here (moved to Physics section)
+  - A good Feynman quote is now in Physics.jsx
 */
 
 function Now() {
-  /*
-    Store your "now" items as data.
-    Update these whenever your focus changes!
-  */
   const currentlyDoing = [
     {
-      emoji: '🔨',
-      title: 'Building',
-      description: 'Learning React by building this portfolio website from scratch.',
+      emoji: '🔭',
+      title: 'Obsessing Over',
+      description: 'Black hole thermodynamics and the information paradox. How does Hawking radiation carry information? Genuinely keeps me up at night.',
     },
     {
-      emoji: '📚',
-      title: 'Reading',
-      description: '"The Pragmatic Programmer" — a classic book on software craft.',
+      emoji: '📐',
+      title: 'Studying',
+      description: 'Multivariable calculus and linear algebra — the grammar of physics. Also 12th grade, which is significantly less poetic.',
     },
     {
-      emoji: '🌱',
+      emoji: '🌍',
       title: 'Learning',
-      description: 'Diving deeper into JavaScript, exploring TypeScript and Node.js.',
+      description: 'German. Weil die Sprache der Philosophie und der Wissenschaft Deutsch ist. (Because the language of philosophy and science is German.)',
     },
     {
-      emoji: '🎯',
-      title: 'Goals',
-      description: 'Ship 3 projects by end of year. Contribute to open source.',
+      emoji: '🖥️',
+      title: 'Building',
+      description: 'This website, obviously. Also exploring how to visualize physics interactively — turning equations into something you can touch.',
     },
   ];
 
-  // Get today's date, formatted nicely
   const lastUpdated = new Date().toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
@@ -78,12 +60,6 @@ function Now() {
             </div>
           ))}
         </div>
-
-        {/* Inspirational quote — adds a personal touch */}
-        <blockquote className="now-quote">
-          "The best time to plant a tree was 20 years ago.
-          The second best time is now."
-        </blockquote>
       </div>
     </section>
   );

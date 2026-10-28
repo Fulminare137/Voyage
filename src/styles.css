@@ -756,6 +756,208 @@ a:hover {
 
 
 /* ──────────────────────────────────────────────────────────────
+   🌐 LANGUAGES SECTION
+   ────────────────────────────────────────────────────────────── */
+.languages-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.language-entry {
+  border-left: 2px solid var(--border);
+  padding-left: 14px;
+  transition: border-color 0.3s;
+}
+
+.language-entry:hover {
+  border-left-color: var(--accent);
+}
+
+.language-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.language-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.language-level {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--accent);
+  background: var(--accent-dim);
+  padding: 2px 8px;
+  border-radius: 3px;
+  border: 1px solid rgba(79, 209, 197, 0.2);
+}
+
+.language-note {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-style: italic;
+}
+
+
+/* ──────────────────────────────────────────────────────────────
+   ⚛️ PHYSICS / INTERACTIVE SECTION
+   ────────────────────────────────────────────────────────────── */
+.physics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  margin-bottom: 56px;
+}
+
+.physics-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 28px;
+  transition: border-color 0.3s;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.physics-card:hover {
+  border-color: rgba(79, 209, 197, 0.25);
+}
+
+.physics-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.physics-number {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.physics-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.physics-description {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.physics-description strong {
+  color: var(--text-primary);
+}
+
+.physics-canvas {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  display: block;
+  cursor: default;
+}
+
+.physics-caption {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+/* Wave controls / sliders */
+.wave-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.wave-control-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+}
+
+.wave-control-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  min-width: 80px;
+}
+
+.wave-slider {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 2px;
+  background: var(--border);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+.wave-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+}
+
+.wave-slider::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 0 4px var(--accent-dim);
+}
+
+.wave-slider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+  border: none;
+}
+
+/* Feynman quote — with a bit more personality than the old blockquote */
+.feynman-quote {
+  border-left: 2px solid var(--accent);
+  padding-left: 24px;
+  max-width: 640px;
+}
+
+.feynman-quote p {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+
+.feynman-quote cite {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent);
+  font-style: normal;
+  letter-spacing: 0.5px;
+}
+
+
+/* ──────────────────────────────────────────────────────────────
    📱 RESPONSIVE DESIGN (Mobile)
    ──────────────────────────────────────────────────────────────
 
@@ -817,6 +1019,14 @@ a:hover {
 
   .now-grid {
     grid-template-columns: 1fr;
+  }
+
+  .physics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .physics-canvas {
+    height: 220px;
   }
 
   .hero-name {
