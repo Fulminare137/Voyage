@@ -1,8 +1,8 @@
 {
-  "name": "my-portfolio",
+  "name": "voyage",
   "version": "1.0.0",
   "private": true,
-  "description": "My personal portfolio website — built with React to learn web development!",
+  "description": "Voyage — Minimalist personal portfolio website built with React and Vite",
   "type": "module",
   "scripts": {
     "dev": "vite",

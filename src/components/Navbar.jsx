@@ -34,7 +34,7 @@ function Navbar() {
         - Right side: navigation links
       */}
       <a href="#index" className="nav-brand">
-        Portfolio
+        Voyage
       </a>
 
       {/* Hamburger button — only visible on mobile (hidden via CSS on desktop) */}
