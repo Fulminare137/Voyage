@@ -1,16 +1,12 @@
 /*
   ============================================
-  📄 Hero.jsx — The Landing/Index Section
+  📄 Hero.jsx — Landing Section
   ============================================
-
-  Full-viewport hero with:
-  - Starfield canvas background
-  - Real name (Ramakrushna Hota)
-  - No designation — just the name, big and bold
-  - Bio reflecting astrophysics + math passion
-  - Physics/math easter egg formulas scattered decoratively
-
-  🔑 KEY CONCEPTS: useEffect + useRef + Canvas API
+  - Name: Ramakrushna Hota
+  - German title (Angehender MTSE / Fachinformatiker)
+  - German tagline
+  - 3 action buttons: Projekte, Kontakt, Lebenslauf
+  - Starfield canvas + physics formula decorations
 */
 
 import { useEffect, useRef } from 'react';
@@ -31,7 +27,6 @@ function Hero() {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    // More stars — we love the cosmos
     const stars = Array.from({ length: 220 }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
@@ -75,25 +70,27 @@ function Hero() {
       <canvas ref={canvasRef} className="hero-canvas" />
 
       <div className="hero-content">
-        {/* Just the name — no title/designation */}
         <h1 className="hero-name">
           Ramakrushna Hota
         </h1>
 
-        <p className="hero-bio">
-          Staring at the universe and wondering why it bothers to be
-          so unreasonably mathematical.
-          <br />
-          Astrophysics enthusiast. Occasional poet of equations.
+        <p className="hero-subtitle">
+          Angehender Mathematisch-technischer Softwareentwickler / Fachinformatiker
         </p>
 
-        <div className="hero-links">
-          <a href="https://github.com/Fulminare137" target="_blank" rel="noopener noreferrer">
-            GitHub
+        <p className="hero-bio">
+          Physik, Software und Neugier. Ich lerne, indem ich ausprobiere.
+        </p>
+
+        <div className="hero-buttons">
+          <a href="#projekte" className="btn-primary">
+            Projekte ansehen
           </a>
-          <span className="link-separator">/</span>
-          <a href="mailto:you@email.com">
-            Email
+          <a href="mailto:ramakrushna@example.com" className="btn-secondary">
+            Kontakt
+          </a>
+          <a href="#" className="btn-secondary btn-ghost" title="Lebenslauf kommt bald">
+            Lebenslauf (PDF)
           </a>
         </div>
 
@@ -104,7 +101,6 @@ function Hero() {
           - Schrödinger equation (quantum mechanics)
           - Einstein field equations (spacetime curvature = reality)
           - Euler's identity (the most beautiful equation ever written)
-          - Feynman path integral (sum over all histories)
           - Schwarzschild radius (what makes a black hole)
         */}
         <div className="math-decorations">

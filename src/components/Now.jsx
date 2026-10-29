@@ -20,7 +20,7 @@ function Now() {
     {
       emoji: '📐',
       title: 'Studying',
-      description: 'Multivariable calculus and linear algebra — the grammar of physics. Also 12th grade, which is significantly less poetic.',
+      description: 'Multivariable calculus and linear algebra — the grammar of physics. Equations as a language; slowly becoming fluent.',
     },
     {
       emoji: '🌍',

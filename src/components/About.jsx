@@ -1,18 +1,19 @@
 /*
   ============================================
-  📄 About.jsx — About Me Section
+  📄 About.jsx — Über mich Section
   ============================================
-  - No 12th grade mention, neutral phrasing
-  - "Next" detail row removed
-  - German entries: scientific quotes only, no translations
-  - English entry unchanged
+  - German prose text from user
+  - Details: Location India, Sprachen, Ziel Ausbildung 2027
+  - Languages: En C1 + De B2/C1 with scientific German quotes
+  - Technologies: updated to match requested skills
 */
 
 function About() {
   const details = [
-    { label: 'Location', value: 'India' },
-    { label: 'Currently', value: 'Studying. Thinking. Occasionally both.' },
-    { label: 'Interests', value: 'Astrophysics, Mathematics, Languages' },
+    { label: 'Standort', value: 'Indien' },
+    { label: 'Sprachen', value: 'Deutsch B2 / Englisch C1' },
+    { label: 'Ziel', value: 'Ausbildung in Deutschland ab 2027' },
+    { label: 'Interessen', value: 'Astrophysik, Mathematik, Software, Linux' },
   ];
 
   /*
@@ -20,7 +21,6 @@ function About() {
     ──────────
     English: keep as-is (user confirmed it's perfect).
     German: scientific quotes in German — no translations.
-    These are real statements by real scientists, written in German.
   */
   const languages = [
     {
@@ -29,7 +29,7 @@ function About() {
       note: 'Native fluency in sarcasm included.',
     },
     {
-      lang: 'German',
+      lang: 'Deutsch',
       level: 'B2/C1',
       note: '"Gott würfelt nicht." — Albert Einstein',
     },
@@ -46,37 +46,29 @@ function About() {
   ];
 
   const technologies = [
-    'JavaScript', 'React', 'Python', 'HTML/CSS',
-    'Git', 'Vite', 'LaTeX', 'C++',
+    'Linux', 'JavaScript', 'React', 'Webhosting',
+    'Computernetzwerke', 'Betriebssysteme', 'IT-Fehlersuche',
   ];
 
   return (
     <section id="about" className="about section">
       <div className="container">
-        <h2 className="section-label">About</h2>
+        <h2 className="section-label">Über mich</h2>
 
         <div className="about-grid">
-          {/* LEFT COLUMN: Text */}
+          {/* LEFT COLUMN: German prose */}
           <div className="about-text">
             <p className="about-large">
-              I'm Ramakrushna — someone who fell in love with the universe
-              and never quite recovered.
+              Ich komme aus Indien und interessiere mich für Software, Linux und Astrophysik.
             </p>
             <p>
-              Astrophysics isn't just something I study — it's how I make
-              sense of the world. The fact that the same mathematics that
-              describes a falling apple also governs the collapse of stars
-              is, frankly, unreasonably beautiful.
+              Ich probiere neue Technologien am liebsten selbst aus und bleibe bei Fehlern
+              dran, bis die Lösung funktioniert.
             </p>
             <p>
-              I appreciate mathematics not just as a tool, but as an art
-              form. A well-crafted proof gives me the same feeling as a
-              perfect sentence — elegant, inevitable, surprising.
-            </p>
-            <p>
-              Currently figuring out which university will tolerate someone
-              who reads quantum mechanics for fun and complains about it
-              in three languages.
+              Ab August 2027 möchte ich eine Ausbildung in Deutschland im Bereich
+              Softwareentwicklung beginnen. Deutsch (B2) und Englisch (C1) sind meine
+              Arbeitssprachen.
             </p>
           </div>
 
@@ -93,7 +85,7 @@ function About() {
 
             {/* LANGUAGES SECTION */}
             <div className="tech-section">
-              <h3 className="tech-title">Languages</h3>
+              <h3 className="tech-title">Sprachen</h3>
               <div className="languages-list">
                 {languages.map((item, index) => (
                   <div key={index} className="language-entry">
@@ -110,7 +102,7 @@ function About() {
             </div>
 
             <div className="tech-section">
-              <h3 className="tech-title">Technologies</h3>
+              <h3 className="tech-title">Technologien</h3>
               <div className="tech-grid">
                 {technologies.map((tech) => (
                   <span key={tech} className="tech-tag">
